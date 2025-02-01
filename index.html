@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Key</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #keyDisplay {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerador de Key</h1>
+    <button onclick="showKey()">Mostrar Key</button>
+    <p id="keyDisplay"></p>
+
+    <script>
+        const prefix = "CLH766_A";
+        const keyStorage = localStorage.getItem("generatedKey");
+        const keyTimestamp = localStorage.getItem("keyTimestamp");
+        const now = new Date().getTime();
+        const oneDay = 24 * 60 * 60 * 1000;
+
+        let generatedKey;
+        
+        if (!keyStorage || !keyTimestamp || now - keyTimestamp > oneDay) {
+            const randomPart = Math.random().toString(36).substr(2, 8).toUpperCase();
+            generatedKey = `${prefix}${randomPart}`;
+            localStorage.setItem("generatedKey", generatedKey);
+            localStorage.setItem("keyTimestamp", now);
+        } else {
+            generatedKey = keyStorage;
+        }
+        
+        function showKey() {
+            document.getElementById("keyDisplay").innerText = "Key Gerada: " + generatedKey;
+        }
+    </script>
+</body>
+</html>
