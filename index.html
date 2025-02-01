@@ -14,6 +14,7 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+            margin: 5px;
         }
         #keyDisplay {
             margin-top: 20px;
@@ -25,15 +26,30 @@
 <body>
     <h1>Gerador de Key</h1>
     <button onclick="generateKey()">Gerar Nova Key</button>
+    <button onclick="copyKey()">Copiar Key</button>
     <p id="keyDisplay"></p>
 
     <script>
-        const prefix = "CLH766_";
+        const prefix = "CLH766_A";
         
         function generateKey() {
-            const randomPart = Math.random().toString(36).substr(2, 8).toUpperCase();
+            let randomPart = "";
+            for (let i = 0; i < 5; i++) { // Gera 5 blocos de caracteres
+                randomPart += Math.random().toString(36).substr(2, 8).toUpperCase();
+            }
             const newKey = `${prefix}${randomPart}`;
             document.getElementById("keyDisplay").innerText = "Key Gerada: " + newKey;
+        }
+
+        function copyKey() {
+            const keyText = document.getElementById("keyDisplay").innerText.replace("Key Gerada: ", "");
+            if (keyText) {
+                navigator.clipboard.writeText(keyText).then(() => {
+                    alert("Key copiada para a área de transferência!");
+                }).catch(err => {
+                    alert("Erro ao copiar a Key");
+                });
+            }
         }
     </script>
 </body>
