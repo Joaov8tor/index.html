@@ -24,29 +24,16 @@
 </head>
 <body>
     <h1>Gerador de Key</h1>
-    <button onclick="showKey()">Mostrar Key</button>
+    <button onclick="generateKey()">Gerar Nova Key</button>
     <p id="keyDisplay"></p>
 
     <script>
-        const prefix = "CLH766_A";
-        const keyStorage = localStorage.getItem("generatedKey");
-        const keyTimestamp = localStorage.getItem("keyTimestamp");
-        const now = new Date().getTime();
-        const oneDay = 24 * 60 * 60 * 1000;
-
-        let generatedKey;
+        const prefix = "CLH766_";
         
-        if (!keyStorage || !keyTimestamp || now - keyTimestamp > oneDay) {
+        function generateKey() {
             const randomPart = Math.random().toString(36).substr(2, 8).toUpperCase();
-            generatedKey = `${prefix}${randomPart}`;
-            localStorage.setItem("generatedKey", generatedKey);
-            localStorage.setItem("keyTimestamp", now);
-        } else {
-            generatedKey = keyStorage;
-        }
-        
-        function showKey() {
-            document.getElementById("keyDisplay").innerText = "Key Gerada: " + generatedKey;
+            const newKey = `${prefix}${randomPart}`;
+            document.getElementById("keyDisplay").innerText = "Key Gerada: " + newKey;
         }
     </script>
 </body>
